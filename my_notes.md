@@ -55,4 +55,4 @@ public:
  * double param_1 = obj->next(val);
  */
  ```
- c++
+ 
