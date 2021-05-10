@@ -1,6 +1,14 @@
-## c++ stl practice :https://www.hackerrank.com/domains/cpp/stl/page/1
+# c++ stl practice :https://www.hackerrank.com/domains/cpp/stl/page/1
+# system design
+## Grokking the System Design Interview https://www.educative.io/courses/grokking-the-system-design-interview?affiliate_id=5749180081373184/
+## [经验总结] 一篇文章解决所有system design面试 https://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=559285&extra=page%3D1%26filter%3Dtypeid%26typeid%3D1025%26typeid%3D1025
+## 学习如何设计大型系统 https://github.com/donnemartin/system-design-primer/blob/master/README-zh-Hans.md
 
-# 05-09-2021 第一次使用markdown做笔记
+# OOD
+## [经验总结] 稍微讲两句关于OOD的闲话吧。。关于怎么学，扯淡，以及怎么用 https://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=176958&extra=page%3D1%26filter%3Dtypeid%26typeid%3D1025%26typeid%3D1025
+
+# 刷题记录
+## 05-09-2021 第一次使用markdown做笔记
 ## Amazon 电面准备
 ### 目前不知道电面时间，只知道存在电面  
 ### 准备思路：  
