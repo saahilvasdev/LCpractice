@@ -65,4 +65,53 @@ public:
  * double param_1 = obj->next(val);
  */
  ```
- 
+ ## 刷题记录： 05-10-2021
+ ### 今天预约了面试时间,希望定在五月24,这样还有两周时间.
+ #### 学习了 How Your Amazon Interview Examples Are Assessed- Inside Info From A Bar Raiser
+ #### https://www.youtube.com/watch?v=2JL4lQUhp0E
+ #### 工作占用时间太多了！
+ #### 98. Validate Binary Search Tree
+ #### O(n) time, O(h) space
+ 1. 思路：left less than cur, right greater than cur.
+ 2. cur is the max of all left, cur is the min of all right
+ 3. tail recursion
+ 4. deal with INT_MAX, INT_MIN, NULL as inputs
+ ```c++
+ /**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if(!root->left && !root->right)
+            return true;
+        return isValidBST(root, NULL, NULL);
+    }
+```
+    
+```c++
+    // int* cur_max is an int pointer, aka address.
+    // int* cur_min is an int pointer.
+    // hence we can pass in INT_MAX and INT_MIN without any problem:
+    // we didn't compare them to default INT_MAX INT_MIN, because defaults dont exist.
+    bool isValidBST(TreeNode* root, int* cur_max, int* cur_min) {
+        if (root == nullptr)
+            return true;
+        
+        if ( (cur_max && root->val >= *cur_max) || ( cur_min && root->val <= *cur_min ) )
+            return false;
+        return isValidBST(root->left, &(root->val), cur_min) && isValidBST(root->right, cur_max, &(root->val) );
+    }
+};
+```
+**使用指针来代替值，这样初始值不存在，就没有INT_MAX INT_MIN作为输入的困扰**
+
+####
