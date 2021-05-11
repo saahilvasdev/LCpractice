@@ -7,6 +7,34 @@
 #### Find All Combination of Numbers that Sum to a Target
 ======
 #### Fill the Truck
+##### my solution:
+```c++
+//compare for sorting
+bool compare(vector<int> a, vector<int> b) {
+        return a[1] > b[1];
+    }
+class Solution {
+public:
+
+    int maximumUnits(vector<vector<int>>& boxTypes, int truckSize) {
+        sort(boxTypes.begin(), boxTypes.end(), compare);
+        int total_units = 0;
+        for (auto box : boxTypes) {
+            
+            if(truckSize <box[0] ) { //remaining box fill up truck
+                total_units += truckSize * box[1];
+                return total_units;
+            }
+            else {
+                truckSize -= box[0];
+                total_units += box[0] * box[1];
+            }
+        }
+        
+        return total_units;
+    }
+};
+```
 ======
 #### Slowest Key
 ======
