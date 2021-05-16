@@ -114,4 +114,171 @@ public:
 ```
 **使用指针来代替值，这样初始值不存在，就没有INT_MAX INT_MIN作为输入的困扰**
 
+## 刷题记录： 05-16-2021
+### LC 16. 3SUM
+#### O(n^2) time
+#### O(1) space
+```c++
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        //because we are returning sum, we can sort the array/vector
+        sort(nums.begin(), nums.end());
+        
+        int diff = INT_MAX;
+        int sz = nums.size();
+        
+        for (int i = 0; i < sz && diff != 0; i++) {
+            int lo = i+1, hi = sz -1;
+            
+            while (lo < hi) {
+                int sum = nums[i] + nums[lo] + nums[hi];// current 
+                if (abs(target - sum) < abs(diff)) {
+                    diff = target - sum; //update diff
+                }
+                if (sum < target)
+                    lo ++;
+                else // sum >= target
+                    hi --;
+            }
+        }
+        
+        return target - diff;
+        
+    }
+};
+```
+
+### LC 28. Implement strStr()
+#### 返回第一个出现str的位置，注意重复的就不要了。
+```c++
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        //return 0 if needle is empty
+        if(needle == "")
+            return 0;
+        
+        int ind = -1;
+        
+        for (int j = 0; j < haystack.size(); j++) {
+            if(haystack[j] == needle[0]) {
+                for (int i = 0; i < needle.size(); i ++) {
+                    if(haystack[j+i] != needle[i]) 
+                    {
+                        break;
+                    }
+                    if (i == needle.size() - 1) {
+                        ind = j;
+                        j = haystack.size();
+                    }
+                }
+            }
+        }
+        
+        return ind;
+    }
+};
+```
+
+### LC 48. rotate image
+#### o(n) time, o(1) space
+#### swap all four corners, then shift pointer
+```c++
+class Solution {
+public:
+    
+   
+        
+    void rotate(vector<vector<int>>& matrix) {
+        
+        if(matrix.size() < 1)
+            return;
+        if(matrix[0].size() < 1)
+            return;
+        
+        //there are four corners swaping with each other.
+        int n = matrix.size(); //it is a square
+        
+        for(int i = 0; i < (n+1)/2; i++) {
+            for(int j = 0; j < n /2; j++) {
+                int tmp = matrix[n - 1- j][i];
+                matrix[n - 1 - j][i] = matrix[n - 1 -i][n - 1 - j];
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 -i];
+                matrix[j][n - 1 - i] = matrix[i][j];
+                matrix[i][j] = tmp;
+            }
+            
+        }
+        
+    }
+};
+```
+### lc 206. reverse linked list
+#### 一定要3个指针，重新复习一次
+
+```c++
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode * prev = nullptr;
+        ListNode * cur = head;
+        
+        while (cur != nullptr) {
+            head = cur->next;
+            cur->next = prev;
+            
+            prev = cur;
+            cur = head;
+        }
+        
+        return prev;
+    }
+};
+```
+
+### LC 23. Merge k Sorted Lists
+#### time o(nlogk) k is the number of lists
+#### space o(n) by creating a new list, o(k) by implementing priority queue
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+    struct compare{
+        bool operator()(ListNode* &left, ListNode* &right) {
+            return left->val > right->val;
+        }
+    };
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, compare> q;
+        
+        for(auto l : lists) {
+            if(l)
+                q.push(l);
+        }
+        ListNode* head = new ListNode(0);
+        ListNode* tmp = head;
+        
+        while (!q.empty()) {
+            ListNode* p = q.top();
+            q.pop();
+            
+            tmp->next = new ListNode(p->val);
+            tmp = tmp->next;
+            if(p->next) q.push(p->next);
+        }
+        
+        return head->next;
+    }
+};
+```
 ####

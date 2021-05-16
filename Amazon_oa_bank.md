@@ -1,8 +1,35 @@
 ### Amazon OA bank
 
+#### fresh delivery
+class Solution {
+public:
+  vector<vector<int>> kClosest(vector<vector<int>>& allLocations, int numDeliveries) {
+        vector<vector<int>> ans;
+        if(allLocations.size()==0)return ans;
+
+        priority_queue<pair<int,pair<int,int>>> pq;
+        for(int i=0;i<allLocations.size();i++)
+        {
+            int dist=allLocations[i][0]*allLocations[i][0]+allLocations[i][1]*allLocations[i][1];
+            
+            pq.push({dist,{allLocations[i][0],allLocations[i][1]}});
+            if(pq.size()>numDeliveries)
+                pq.pop();
+            
+        }
+        while(!pq.empty())
+        {
+            ans.push_back({pq.top().second.first,pq.top().second.second});
+            pq.pop();
+        }
+        return ans;
+    }
+
+};
+
 #### Robot in Circle
 ======
-#### Number Game
+#### Number Game (hard)
 ======
 #### Find All Combination of Numbers that Sum to a Target
 ======
@@ -651,5 +678,23 @@ https://aonecode.com/amazon-onli ... oups/Friend-Circles
 #### 1401 https://leetcode.com/problems/circle-and-rectangle-overlapping/
 
 #### prime order prioritization
+
+#### Substrings and distinct characters
+
+You're given a string S of lower case alphabets. Let Xi be the number of substrings with atleast i distinct characters.
+
+Determine the value of Xi for all i, where i can take values in range [1, 26] (both inclusive)
+
+Constraints:
+N (length of S) is upto 5 * 10**5
+
+Examples:
+S = aabc
+
+For X1 -> 4 * (5) / 2 -> 10 (No of substrings with atleast 1 distinct characters)
+For X2 -> substrings with atleast 2 distinct characters are (aab, aabc, bc, abc, ab) -> 5
+For X3 -> substrings with atleast 3 distinct characters are (aabc, abc) -> 2
+For Xi where i >= 4, No substrings can have alteast > 4 distinct characters
+So, the answer will be [10, 5, 2, 0, 0, 0, 0, 0, 0, ----, 0] (length of the output must be 26 for Xi where i is from 1 to 26)
 
 ####
