@@ -64,8 +64,47 @@ public:
 ```
 ======
 #### Slowest Key
+##### solution: (mine)
+```c++
+class Solution {
+public:
+    char slowestKey(vector<int>& releaseTimes, string keysPressed) {
+        
+        int max_time = releaseTimes[0];
+        char max_char = keysPressed[0];
+        
+        for (int i = 1; i < releaseTimes.size(); i++) {
+            if (!compare_first(max_time, max_char, releaseTimes[i]-releaseTimes[i-1], keysPressed[i])) {
+                max_char = keysPressed[i];
+                max_time = releaseTimes[i]-releaseTimes[i-1];
+            }
+        }
+        
+        return max_char;
+    }
+    
+    
+    //return true if we think the first char has higer priority
+    
+    bool compare_first(int a, char ch_a, int b, char ch_b) {
+        if (a > b) {
+            return true;
+        }
+        if (b > a) {
+            return false;
+        }
+        
+        if ((ch_a - 'a') > (ch_b - 'a')) {
+            return true;
+        }
+        
+        return false;
+    }
+};
+```
 ======
 #### Five Star Sellers
+
 ======
 #### Number of Ways to Split Into Primes
 ======
@@ -671,13 +710,60 @@ public static String[] parseLogs(List<List<String>> logs, int t) {
 	}
 ```
 
-#### Gifting-Groups
+#### Gifting-Groups (lc 547)
 https://aonecode.com/amazon-onli ... oups/Friend-Circles
 解法和#1一样，DFS。 这次好好看清楚了input，input还是一个list of string， 每个string代表一个node的adjacent matrix。
+##### union find
+```c++
+class Solution {
+private:
+    
+    int count;
 
+public:
+    int find(vector<int> &parents,int i) {
+        if(parents[i] == -1) {
+            return i;
+        }
+        
+        return parents[i] = find(parents,parents[i]);
+    }
+    
+    
+    void connect(vector<int> &parents,int a, int b) {
+        int parent_a = find(parents,a);
+        int parent_b = find(parents,b);
+        if(parent_a != parent_b) {
+            parents[parent_a] = parent_b;
+            count--;  //one less group
+        }
+    }
+    
+    
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        vector<int> parents (n+1, -1);
+        
+        count = n;
+        
+        
+        for(int i = 0; i < n; i ++) {
+            for (int j = 0; j < n; j ++) {
+                if(isConnected[i][j] == 1) {
+                    connect(parents,i, j);
+                    isConnected[j][i] = 0;
+                }
+            }
+        }
+        
+        return count;
+    }
+};
+```
 #### 1401 https://leetcode.com/problems/circle-and-rectangle-overlapping/
 
-#### prime order prioritization
+#### prime order prioritization (LC 937)
+
 
 #### Substrings and distinct characters
 
