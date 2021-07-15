@@ -283,3 +283,53 @@ public:
 ```
 
 #### Gifting-groups (lc547)
+
+####  LC. 210. Course Schedule II (Topological sort)
+##### time complexicty o(v+e) space complexity o(v+e)
+
+##### solution:
+``` c++
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> pre_req (numCourses);
+        vector<int> idg (numCourses);
+        
+        for (auto pre : prerequisites) {
+            pre_req[pre[1]].push_back(pre[0]); //pre[1] is the before class, pre[0] is the after class
+            idg[pre[0]]++; //all these class need an additional class to access them
+        }
+        
+        vector<int> ans;
+        queue<int> Q; //for the bfs
+        int taken_num = 0 ;//num of courses taken
+        for (int i = 0; i < idg.size(); i ++) {
+            if (idg[i] == 0) { //this course has no require
+                Q.push(i); //push it into queue
+                //ans.push_back(i); //take this course
+            }
+        }
+        
+        while (!Q.empty() ) {
+            int curr = Q.front(); // current course
+            Q.pop();
+            
+            if(find(ans.begin(), ans.end(), curr) != ans.end()) {
+                //it is taken
+                return {};
+            }
+            ans.push_back(curr);
+            taken_num ++;
+            //reduce idg of this course's after course
+            for(auto course : pre_req[curr]) {
+                idg[course]--;
+                if(idg[course] == 0) 
+                    Q.push(course);
+            }
+        }
+        if(taken_num ==numCourses)
+            return ans;
+        return {};
+    }
+};
+```
